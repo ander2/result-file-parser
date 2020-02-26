@@ -15,8 +15,7 @@ def calculate_stats(posizioak, puntuazioak, sailkapena, kategoria):
                 continue
             talde_norm = TALDE_DICT.get(taldea, taldea)
             stats[talde_norm] = {
-                'position': len([tal for tal in sailkapena['stats'].keys()
-                                 if (puntuazioak[tal][-1] > puntuazioak[taldea][-1])]) + 1,
+                'position': [sailk[0] for sailk in sorted(puntuazioak.items(), key=lambda x:x[1][-1], reverse=True)].index(talde_norm) + 1,
                 'points': puntuazioak[taldea][-1],
                 'wins': posizioak[talde_norm].count(1),
                 'best': min(posizioak[talde_norm]),
@@ -36,8 +35,7 @@ def calculate_stats(posizioak, puntuazioak, sailkapena, kategoria):
        for taldea in puntuazioak.keys():
             talde_norm = taldea
             stats[talde_norm] = {
-                "position": len([tal for tal in puntuazioak.keys()
-                                 if (puntuazioak[tal] > puntuazioak[taldea])]) + 1,
+                'position': [sailk[0] for sailk in sorted(puntuazioak.items(), key=lambda x:x[1][-1], reverse=True)].index(talde_norm) + 1,
                 'points': puntuazioak[talde_norm][-1],
                 'wins': posizioak[talde_norm].count(1),
                 'best': min(posizioak[talde_norm]),
