@@ -20,7 +20,7 @@ if __name__ == "__main__":
         id = sys.argv[3]
     if sys.argv[4]:
         lekua = sys.argv[4]
-    with open('./data/2020111_194026_200111_Arraun denborrak.csv', newline='') as csvfile:
+    with open(filename, newline='') as csvfile:
         teamreader = csv.reader(csvfile, delimiter=",")
 
         e = {'izena': izena}
