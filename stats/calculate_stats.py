@@ -11,8 +11,9 @@ def calculate_stats(posizioak, puntuazioak, sailkapena, kategoria):
     stats = {}
     if sailkapena is not None:
         for taldea in sailkapena['stats']:
-            if kategoria != taldea['kategoria']:
-                continue
+            # import pdb; pdb.set_trace()
+            # if kategoria != taldea['kategoria']:
+            #     continue
             talde_norm = TALDE_DICT.get(taldea, taldea)
             stats[talde_norm] = {
                 'position': [sailk[0] for sailk in sorted(puntuazioak.items(), key=lambda x:x[1][-1], reverse=True)].index(talde_norm) + 1,
@@ -49,7 +50,7 @@ def update_stats(league, year, category):
     stats = Stats()
     positions = stats.calculate_posizioak(league, year, category)
     puntuazioak = stats.calculate_cumulative(league, year, category)
-    rank = stats.sailkapen_orokorra(league, year)
+    rank = stats.sailkapen_orokorra(league, year, category)
     if rank:
         rank['stats'] = calculate_stats(positions, puntuazioak, rank, category)
     else:
@@ -58,7 +59,7 @@ def update_stats(league, year, category):
             'stats': calculate_stats(positions, puntuazioak, rank, category)
         }
     print(json.dumps(rank['stats']))
-    stats.set_sailkapen_orokorra(league, year, rank)
+    stats.set_sailkapen_orokorra(league, year, category, rank)
 
 
 if __name__ == "__main__":

@@ -20,13 +20,15 @@ class Stats:
         return talde_izenak #self.db['talde_izenak']
 
 
-    def sailkapen_orokorra(self, league, year):
-        return stats_dao.get_sailkapen_orokorra(league, year)
+    def sailkapen_orokorra(self, league, year, category):
+        _category = category.replace(' ', '_').lower()
+        return stats_dao.get_sailkapen_orokorra(league, year, _category)
 
 
-    def set_sailkapen_orokorra(self, league, date, rank):
+    def set_sailkapen_orokorra(self, league, date, category, rank):
         '''Set rank'''
-        stats_dao.set_sailkapen_orokorra(league, date, rank)
+        _category = category.replace(' ', '_').lower()
+        stats_dao.set_sailkapen_orokorra(league, date, _category, rank)
 
     def calculate_posizioak(self, liga, urtea, kategoria):
         '''Calculate position array for every team'''

@@ -26,17 +26,17 @@ def get_estropadak(league, date):
     return estropadak
 
 
-def get_sailkapen_orokorra(league, date):
+def get_sailkapen_orokorra(league, date, category):
     '''Get rank'''
     rank = {}
     try:
-        rank = db.get('rank_{}_{}'.format(league, date))
+        rank = db.get('rank_{}_{}_{}'.format(league, date, category))
     except couchdb.http.ResourceNotFound:
         pass
     return rank
 
 
-def set_sailkapen_orokorra(league, date, rank):
+def set_sailkapen_orokorra(league, date, category, rank):
     '''Set rank'''
-    key = 'rank_{}_{}'.format(league, date)
+    key = 'rank_{}_{}_{}'.format(league, date, category)
     db[key] = rank
