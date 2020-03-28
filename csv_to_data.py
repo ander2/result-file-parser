@@ -6,7 +6,7 @@ import sys
 from estropadakparser.estropada.estropada import Estropada, TaldeEmaitza
 from operator import attrgetter
 
-couch = couchdb.Server('http://admin:HHZ60Et4wxJLhLs@127.0.0.1:5984')
+couch = couchdb.Server('http://admin:admin123@127.0.0.1:5984')
 db = couch['test']
 
 kategoriak = ['Haurra', 'Infantila', 'Promesa', 'Kadete', 'Jubenil', 'Absolut', 'Jubenil', 'Senior']
