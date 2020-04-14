@@ -14,10 +14,19 @@ def puntuazioak_kalkulatu(estropada):
     kategoriak = ['SG', 'AN', 'AG', 'IN', 'IG', 'KN', 'KG', 'JN', 'JG', 'SN']
     for kategoria in kategoriak:
         taldeak = [taldea for taldea in estropada.sailkapena if taldea.kategoria == kategoria]
-        liga_taldeak = [taldea for taldea in taldeak if 'nesk' not in taldea.talde_izena.lower() and 'mx' not in taldea.talde_izena.lower()]
-        liga_taldeak = [taldea for taldea in liga_taldeak if "Ez aurkeztua" not in taldea.ziabogak]
+        liga_taldeak = [taldea for taldea in taldeak if 'nesk' not in taldea.talde_izena.lower() and 'mx' not in taldea.talde_izena.lower() and 'NM' not in taldea.talde_izena]
+        liga_taldeak = [taldea for taldea in liga_taldeak if "Ez aurkeztua" not in taldea.denbora]
+        liga_taldeak = [taldea for taldea in liga_taldeak if "Fortfait" not in taldea.denbora]
+        max_points = 12
+        if len(liga_taldeak) > 12:
+            max_points = len(liga_taldeak)
+        logger.debug(f'Kategoria: {kategoria}')
         for posizioa, taldea in enumerate(liga_taldeak):
-            taldea.puntuazioa = len(liga_taldeak) - posizioa
+            logger.debug(f'Puntuazioa:{taldea.talde_izena}\t{max_points}-{taldea.posizioa} + 1')
+            if 'kanporatua' in taldea.denbora.lower() or 'deskalifikatua' in taldea.denbora.lower():
+                taldea.puntuazioa = 0
+            else:
+                taldea.puntuazioa = max_points - posizioa
 
 def read_columns(df):
     columns = []
