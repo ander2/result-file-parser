@@ -11,12 +11,14 @@ def calculate_stats(posizioak, puntuazioak, sailkapena, kategoria):
     stats = {}
     if sailkapena is not None:
         for taldea in sailkapena['stats']:
-            # import pdb; pdb.set_trace()
-            # if kategoria != taldea['kategoria']:
-            #     continue
             talde_norm = TALDE_DICT.get(taldea, taldea)
             stats[talde_norm] = {
-                'position': [sailk[0] for sailk in sorted(puntuazioak.items(), key=lambda x:x[1][-1], reverse=True)].index(talde_norm) + 1,
+                'position': [
+                    sailk[0]
+                    for sailk in sorted(
+                        puntuazioak.items(),
+                        key=lambda x:x[1][-1], reverse=True
+                    )].index(talde_norm) + 1,
                 'points': puntuazioak[taldea][-1],
                 'wins': posizioak[talde_norm].count(1),
                 'best': min(posizioak[talde_norm]),
@@ -25,18 +27,25 @@ def calculate_stats(posizioak, puntuazioak, sailkapena, kategoria):
                 'cumulative': puntuazioak[taldea]
             }
             if min(posizioak[talde_norm]) < 0:
-                raise ValueError('{} out of min bound({}): {}'.format(talde_norm,
-                                                                      sailkapena['_id'],
-                                                                      posizioak[talde_norm]))
+                raise ValueError('{} out of min bound({}): {}'.format(
+                    talde_norm,
+                    sailkapena['_id'],
+                    posizioak[talde_norm]))
             if min(posizioak[talde_norm]) > len(posizioak):
-                raise ValueError('{} out of max bound({}): {}'.format(talde_norm,
-                                                                      sailkapena['_id'],
-                                                                      posizioak[talde_norm]))
+                raise ValueError('{} out of max bound({}): {}'.format(
+                    talde_norm,
+                    sailkapena['_id'],
+                    posizioak[talde_norm]))
     else:
-       for taldea in puntuazioak.keys():
+        for taldea in puntuazioak.keys():
             talde_norm = taldea
             stats[talde_norm] = {
-                'position': [sailk[0] for sailk in sorted(puntuazioak.items(), key=lambda x:x[1][-1], reverse=True)].index(talde_norm) + 1,
+                'position': [
+                    sailk[0]
+                    for sailk in sorted(
+                        puntuazioak.items(),
+                        key=lambda x:x[1][-1], reverse=True
+                    )].index(talde_norm) + 1,
                 'points': puntuazioak[talde_norm][-1],
                 'wins': posizioak[talde_norm].count(1),
                 'best': min(posizioak[talde_norm]),
@@ -45,6 +54,7 @@ def calculate_stats(posizioak, puntuazioak, sailkapena, kategoria):
                 'cumulative': puntuazioak[taldea]
             }
     return stats
+
 
 def update_stats(league, year, category):
     stats = Stats()
