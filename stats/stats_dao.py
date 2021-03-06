@@ -40,3 +40,13 @@ def set_sailkapen_orokorra(league, date, category, rank):
     '''Set rank'''
     key = 'rank_{}_{}_{}'.format(league, date, category)
     db[key] = rank
+
+
+def get_talde_izenak():
+    '''Get talde izenak'''
+    izenak = {}
+    try:
+        izenak = db.get('talde_izenak')
+    except couchdb.http.ResourceNotFound:
+        pass
+    return izenak

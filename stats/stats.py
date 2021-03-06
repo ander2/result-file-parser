@@ -17,13 +17,11 @@ class Stats:
 
     def load_taldeak(self):
         talde_izenak = {}
-        return talde_izenak #self.db['talde_izenak']
-
+        return talde_izenak  # self.db['talde_izenak']
 
     def sailkapen_orokorra(self, league, year, category):
         _category = category.replace(' ', '_').lower()
         return stats_dao.get_sailkapen_orokorra(league, year, _category)
-
 
     def set_sailkapen_orokorra(self, league, date, category, rank):
         '''Set rank'''
@@ -81,24 +79,27 @@ class Stats:
         for estropada in estropadak:
             logging.info("%s" % estropada['izena'])
             try:
-                sailkapena = estropada['sailkapena']
-                for emaitza in sailkapena:
-                    if kategoria != emaitza['kategoria']:
-                        continue
-                    taldea = emaitza['talde_izena']
-                    if emaitza['puntuazioa'] == '':
-                        puntuak_ = 0
-                    else:
-                        puntuak_ = int(emaitza['puntuazioa'])
-                    if 'puntuazioa-rank' in emaitza:
-                        puntuak_ = int(emaitza['puntuazioa-rank'])
-                    if taldea in puntuazioa:
-                        puntuak = puntuak_ + puntuazioa[taldea][-1:][0]
-                        puntuazioa[taldea].append(puntuak)
-                    else:
-                        puntuazioa[taldea] = list([puntuak_])
-            except KeyError:
+                sailkapena = estropada.get('sailkapena')
+                if sailkapena:
+                    for emaitza in sailkapena:
+                        import pdb; pdb.set_trace()
+                        if kategoria.lower() != emaitza['kategoria'].lower():
+                            continue
+                        taldea = emaitza['talde_izena']
+                        if emaitza['puntuazioa'] == '':
+                            puntuak_ = 0
+                        else:
+                            puntuak_ = int(emaitza['puntuazioa'])
+                        if 'puntuazioa-rank' in emaitza:
+                            puntuak_ = int(emaitza['puntuazioa-rank'])
+                        if taldea in puntuazioa:
+                            puntuak = puntuak_ + puntuazioa[taldea][-1:][0]
+                            puntuazioa[taldea].append(puntuak)
+                        else:
+                            puntuazioa[taldea] = list([puntuak_])
+            except KeyError as e:
                 print("No sailkapena for {}".format(estropada['izena']))
+                print(e)
         return puntuazioa
 
     def calculate_points_per_race(self, liga, urtea, kategoria):

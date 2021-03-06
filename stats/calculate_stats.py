@@ -19,7 +19,8 @@ def calculate_stats(posizioak, puntuazioak, sailkapena, kategoria):
                         puntuazioak.items(),
                         key=lambda x:x[1][-1], reverse=True
                     )].index(talde_norm) + 1,
-                'points': puntuazioak[taldea][-1],
+                'points': puntuazioak[taldea][-1] - min(puntuazioak[taldea]),
+                'discard': min(puntuazioak[taldea]),
                 'wins': posizioak[talde_norm].count(1),
                 'best': min(posizioak[talde_norm]),
                 'worst': max(posizioak[talde_norm]),
