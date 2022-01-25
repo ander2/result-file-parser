@@ -19,13 +19,13 @@ these competitions:
 Usage:
 
 ```python
-python csv_to_data.py
+python gbl_to_data.py /path/to/csv <race_name> <date> <location>
 ```
 
 ## Calculating stats
 
 ```python
-python calculate_stats.py <league> <year> <category>
+python stats/calculate_stats.py <league> <year> <category>
 ```
 
 
